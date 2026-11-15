@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<p class="muted">
+    Your AI voice operations at a glance.
+</p>
+
+
+<!-- MAIN CRM STATISTICS -->
+
+<section class="cards">
+
+    <div class="card">
+
+        <b>{{ contacts }}</b>
+
+        <span>Contacts</span>
+
+    </div>
+
+
+    <div class="card">
+
+        <b>{{ leads }}</b>
+
+        <span>Total Leads</span>
+
+    </div>
+
+
+    <div class="card">
+
+        <b>{{ new }}</b>
+
+        <span>New Leads</span>
+
+    </div>
+
+
+    <div class="card">
+
+        <b>{{ total_calls }}</b>
+
+        <span>Total Calls</span>
+
+    </div>
+
+</section>
+
+
+<!-- VOICE ARCHITECTURE SUMMARY -->
+
+<section class="panel">
+
+    <h2>🎙 Voice Architecture</h2>
+
+    {% if latest_voice %}
+
+    <div class="cards">
+
+        <div class="card">
+
+            <b>{{ latest_voice.industry }}</b>
+
+            <span>Industry</span>
+
+        </div>
+
+
+        <div class="card">
+
+            <b>{{ latest_voice.voice_type }}</b>
+
+            <span>Voice Type</span>
+
+        </div>
+
+
+        <div class="card">
+
+            <b>{{ latest_voice.voice_gender }}</b>
+
+            <span>Voice Gender</span>
+
+        </div>
+
+
+        <div class="card">
+
+            <b>{{ latest_voice.voice_style }}</b>
+
+            <span>Voice Style</span>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <p>
+
+        <strong>Where Used:</strong>
+        {{ latest_voice.usage_area }}
+
+    </p>
+
+
+    <p>
+
+        <strong>Voice Provider:</strong>
+
+        {% if latest_voice.voice_provider %}
+            {{ latest_voice.voice_provider }}
+        {% else %}
+            Not configured
+        {% endif %}
+
+    </p>
+
+
+    <a
+        class="button"
+        href="/voice-architecture"
+    >
+        Manage Voice Architecture
+    </a>
+
+
+    {% else %}
+
+    <p>
+        No voice architecture has been configured yet.
+    </p>
+
+
+    <a
+        class="button"
+        href="/voice-architecture"
+    >
+        + Configure Voice
+    </a>
+
+    {% endif %}
+
+</section>
+
+
+<!-- QUICK ACTIONS -->
+
+<section class="panel">
+
+    <h2>Quick Actions</h2>
+
+    <a
+        class="button"
+        href="/contacts"
+    >
+        Manage Contacts
+    </a>
+
+
+    <a
+        class="button"
+        href="/leads"
+    >
+        Manage Leads
+    </a>
+
+
+    <a
+        class="button"
+        href="/calls"
+    >
+        Call History
+    </a>
+
+
+    <a
+        class="button"
+        href="/voice-architecture"
+    >
+        🎙 Configure Voice
+    </a>
+
+
+    <a
+        class="button"
+        href="/assistant"
+    >
+        Ask AI Assistant
+    </a>
+
+</section>
+
+{% endblock %}

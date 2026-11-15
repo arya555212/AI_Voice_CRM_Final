@@ -1,0 +1,646 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Call History</h1>
+
+
+<!-- ================================================= -->
+<!-- MANUALLY ADD CALL RECORD -->
+<!-- ================================================= -->
+
+<h2>Add Call Record Manually</h2>
+
+<div style="
+    padding:20px;
+    border:1px solid #ccc;
+    margin-bottom:30px;
+">
+
+<form method="post" action="/calls">
+
+    <p>
+
+        <label>Contact Name</label><br>
+
+        <input
+            type="text"
+            name="contact_name"
+            placeholder="Customer name"
+            style="width:300px; padding:8px;"
+        >
+
+    </p>
+
+
+    <p>
+
+        <label>Phone Number</label><br>
+
+        <input
+            type="text"
+            name="phone"
+            placeholder="+91..."
+            style="width:300px; padding:8px;"
+        >
+
+    </p>
+
+
+    <p>
+
+        <label>Call Type</label><br>
+
+        <select
+            name="call_type"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="AI Call">
+                AI Call
+            </option>
+
+            <option value="Inbound">
+                Inbound Call
+            </option>
+
+            <option value="Outbound">
+                Outbound Call
+            </option>
+
+            <option value="Manual">
+                Manual Call
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>Call Duration (seconds)</label><br>
+
+        <input
+            type="number"
+            name="duration_seconds"
+            value="0"
+            min="0"
+            style="width:300px; padding:8px;"
+        >
+
+    </p>
+
+
+    <p>
+
+        <label>Call Result</label><br>
+
+        <select
+            name="result"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="Pending">
+                Pending
+            </option>
+
+            <option value="Successful">
+                Successful
+            </option>
+
+            <option value="Unsuccessful">
+                Unsuccessful
+            </option>
+
+            <option value="Missed">
+                Missed
+            </option>
+
+            <option value="No Answer">
+                No Answer
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>Lead Status</label><br>
+
+        <select
+            name="lead_status"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="Not a Lead">
+                Not a Lead
+            </option>
+
+            <option value="New Lead">
+                New Lead
+            </option>
+
+            <option value="Qualified">
+                Qualified
+            </option>
+
+            <option value="Interested">
+                Interested
+            </option>
+
+            <option value="Converted">
+                Converted
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>AI / Call Summary</label><br>
+
+        <textarea
+            name="ai_summary"
+            rows="4"
+            placeholder="Write the summary of the call..."
+            style="width:500px; padding:8px;"
+        ></textarea>
+
+    </p>
+
+
+    <p>
+
+        <label>Keywords</label><br>
+
+        <input
+            type="text"
+            name="keywords"
+            placeholder="price, demo, interested, follow-up"
+            style="width:500px; padding:8px;"
+        >
+
+    </p>
+
+
+    <p>
+
+        <label>Recall Required?</label><br>
+
+        <select
+            name="recall_required"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="No">
+                No
+            </option>
+
+            <option value="Yes">
+                Yes
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>Follow-up Date</label><br>
+
+        <input
+            type="date"
+            name="follow_up_date"
+            style="width:300px; padding:8px;"
+        >
+
+    </p>
+
+
+    <hr>
+
+    <h3>Client Notification</h3>
+
+
+    <p>
+
+        <label>Was the Client Notified?</label><br>
+
+        <select
+            name="client_notified"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="No">
+                No
+            </option>
+
+            <option value="Yes">
+                Yes
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>Notification Method</label><br>
+
+        <select
+            name="notification_method"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="">
+                Not Selected
+            </option>
+
+            <option value="SMS">
+                SMS
+            </option>
+
+            <option value="Email">
+                Email
+            </option>
+
+            <option value="WhatsApp">
+                WhatsApp
+            </option>
+
+            <option value="Dashboard">
+                CRM Dashboard
+            </option>
+
+            <option value="Push Notification">
+                Push Notification
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>Notification Status</label><br>
+
+        <select
+            name="notification_status"
+            style="width:320px; padding:8px;"
+        >
+
+            <option value="Not Sent">
+                Not Sent
+            </option>
+
+            <option value="Sent">
+                Sent
+            </option>
+
+            <option value="Delivered">
+                Delivered
+            </option>
+
+            <option value="Failed">
+                Failed
+            </option>
+
+        </select>
+
+    </p>
+
+
+    <p>
+
+        <label>Notification Message</label><br>
+
+        <textarea
+            name="notification_message"
+            rows="3"
+            placeholder="Example: Your call has been completed successfully."
+            style="width:500px; padding:8px;"
+        ></textarea>
+
+    </p>
+
+
+    <button
+        type="submit"
+        style="
+            padding:10px 20px;
+            cursor:pointer;
+        "
+    >
+
+        ➕ Add Call Record
+
+    </button>
+
+</form>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- SEARCH -->
+<!-- ================================================= -->
+
+<h2>Search Call History</h2>
+
+<div style="margin-bottom:25px;">
+
+    <form method="get" action="/calls">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ q }}"
+            placeholder="Search name, phone, result, summary or keyword..."
+            style="padding:10px; width:350px;"
+        >
+
+        <button type="submit">
+            🔍 Search
+        </button>
+
+        <a
+            href="/calls"
+            style="margin-left:10px;"
+        >
+            Clear Search
+        </a>
+
+    </form>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- CALL RECORDS -->
+<!-- ================================================= -->
+
+{% if calls %}
+
+<div style="overflow-x:auto;">
+
+<table style="
+    width:100%;
+    border-collapse:collapse;
+">
+
+    <thead>
+
+        <tr>
+
+            <th>ID</th>
+            <th>Contact</th>
+            <th>Phone</th>
+            <th>Call Type</th>
+            <th>Duration</th>
+            <th>Result</th>
+            <th>Lead Status</th>
+            <th>AI Summary</th>
+            <th>Keywords</th>
+            <th>Recall</th>
+            <th>Follow-up</th>
+
+            <th>Client Notified</th>
+            <th>Method</th>
+            <th>Notification Status</th>
+            <th>Notification Message</th>
+
+            <th>Call Date</th>
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+
+        {% for call in calls %}
+
+        <tr>
+
+            <td>{{ call.id }}</td>
+
+            <td>
+                {{ call.contact_name or "-" }}
+            </td>
+
+            <td>
+                {{ call.phone or "-" }}
+            </td>
+
+            <td>
+                {{ call.call_type or "-" }}
+            </td>
+
+
+            <td>
+
+                {% set minutes = call.duration_seconds // 60 %}
+                {% set seconds = call.duration_seconds % 60 %}
+
+                {% if minutes > 0 %}
+
+                    {{ minutes }} min {{ seconds }} sec
+
+                {% else %}
+
+                    {{ seconds }} sec
+
+                {% endif %}
+
+            </td>
+
+
+            <td>
+                {{ call.result or "Pending" }}
+            </td>
+
+
+            <td>
+                {{ call.lead_status or "-" }}
+            </td>
+
+
+            <td style="min-width:250px;">
+
+                {{ call.ai_summary
+                    or "No AI summary available."
+                }}
+
+            </td>
+
+
+            <td>
+                {{ call.keywords or "-" }}
+            </td>
+
+
+            <td>
+                {{ call.recall_required or "No" }}
+            </td>
+
+
+            <td>
+
+                {% if call.follow_up_date %}
+
+                    {{ call.follow_up_date.strftime(
+                        '%d-%m-%Y'
+                    ) }}
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </td>
+
+
+            <!-- NOTIFICATION -->
+
+            <td>
+                {{ call.client_notified or "No" }}
+            </td>
+
+
+            <td>
+                {{ call.notification_method or "-" }}
+            </td>
+
+
+            <td>
+                {{ call.notification_status or "Not Sent" }}
+            </td>
+
+
+            <td style="min-width:220px;">
+
+                {{ call.notification_message
+                    or "-"
+                }}
+
+            </td>
+
+
+            <!-- CALL DATE -->
+
+            <td>
+
+                {% if call.created_at %}
+
+                    {{ call.created_at.strftime(
+                        '%d-%m-%Y %H:%M'
+                    ) }}
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </td>
+
+
+            <!-- DELETE -->
+
+            <td>
+
+                <form
+                    method="post"
+                    action="/calls/{{ call.id }}/delete"
+                    onsubmit="
+                        return confirm(
+                            'Are you sure you want to delete this call record?'
+                        );
+                    "
+                >
+
+                    <button type="submit">
+                        🗑 Delete
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+
+{% else %}
+
+
+<!-- ================================================= -->
+<!-- EMPTY HISTORY -->
+<!-- ================================================= -->
+
+<section class="empty">
+
+    <h2>No Call Records Found</h2>
+
+    <p>
+
+        {% if q %}
+
+            No call records matched:
+
+            <strong>
+                {{ q }}
+            </strong>
+
+        {% else %}
+
+            No call history is available yet.
+
+            <br><br>
+
+            Use the <strong>Add Call Record Manually</strong>
+            form above to create a test call record.
+
+            <br><br>
+
+            In the future, Telnyx or another voice
+            provider can automatically send:
+
+            <br><br>
+
+            • Inbound call records<br>
+            • Outbound call records<br>
+            • AI call duration<br>
+            • Call results<br>
+            • AI summaries<br>
+            • Keywords<br>
+            • Follow-up information<br>
+            • Notification events
+
+        {% endif %}
+
+    </p>
+
+</section>
+
+{% endif %}
+
+
+{% endblock %}

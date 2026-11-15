@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AI Voice CRM</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+{% if request.cookies.get('crm_session') %}
+
+<aside>
+
+    <h2>◉ VoiceCRM</h2>
+
+    <a href="/">Dashboard</a>
+
+    <a href="/contacts">Contacts</a>
+
+    <a href="/leads">Leads</a>
+
+    <a href="/calls">Call History</a>
+
+    <!-- NEW VOICE ARCHITECTURE PAGE -->
+    <a href="/voice-architecture">
+        🎙 Voice Architecture
+    </a>
+
+    <a href="/inbound">Inbound Calling</a>
+
+    <a href="/outbound">Outbound Calling</a>
+
+    <a href="/assistant">AI Assistant</a>
+
+    <a class="logout" href="/logout">Logout</a>
+
+</aside>
+
+{% endif %}
+
+
+<main class="{% if not request.cookies.get('crm_session') %}auth{% endif %}">
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+</body>
+</html>

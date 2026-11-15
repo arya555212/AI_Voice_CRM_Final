@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Voice Architecture</h1>
+
+<p class="muted">
+    Configure and manage the AI voices used in your voice CRM.
+</p>
+
+
+<!-- ADD VOICE CONFIGURATION -->
+
+<section class="panel">
+
+    <h2>Add Voice Configuration</h2>
+
+    <form method="post" action="/voice-architecture">
+
+        <div style="margin-bottom:15px;">
+
+            <label><strong>Industry</strong></label><br>
+
+            <select name="industry" required>
+
+                <option value="">Select Industry</option>
+
+                <option value="Healthcare">Healthcare</option>
+                <option value="Retail">Retail</option>
+                <option value="Banking">Banking</option>
+                <option value="Insurance">Insurance</option>
+                <option value="Real Estate">Real Estate</option>
+                <option value="Education">Education</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="Technology">Technology</option>
+                <option value="Other">Other</option>
+
+            </select>
+
+        </div>
+
+
+        <div style="margin-bottom:15px;">
+
+            <label><strong>Voice Type / Role</strong></label><br>
+
+            <select name="voice_type" required>
+
+                <option value="">Select Voice Type</option>
+
+                <option value="AI Sales Agent">AI Sales Agent</option>
+                <option value="Customer Support Agent">Customer Support Agent</option>
+                <option value="AI Receptionist">AI Receptionist</option>
+                <option value="Appointment Booking Agent">
+                    Appointment Booking Agent
+                </option>
+                <option value="Lead Qualification Agent">
+                    Lead Qualification Agent
+                </option>
+                <option value="Collections Agent">
+                    Collections Agent
+                </option>
+                <option value="General AI Assistant">
+                    General AI Assistant
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div style="margin-bottom:15px;">
+
+            <label><strong>Voice Gender</strong></label><br>
+
+            <select name="voice_gender" required>
+
+                <option value="">Select Voice</option>
+
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Neutral">Neutral</option>
+
+            </select>
+
+        </div>
+
+
+        <div style="margin-bottom:15px;">
+
+            <label><strong>Voice Style</strong></label><br>
+
+            <select name="voice_style" required>
+
+                <option value="">Select Voice Style</option>
+
+                <option value="Human-like">
+                    Human-like
+                </option>
+
+                <option value="Natural">
+                    Natural
+                </option>
+
+                <option value="Professional">
+                    Professional
+                </option>
+
+                <option value="Robotic">
+                    Robotic
+                </option>
+
+                <option value="Friendly">
+                    Friendly
+                </option>
+
+                <option value="Conversational">
+                    Conversational
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div style="margin-bottom:15px;">
+
+            <label><strong>Where Is This Voice Used?</strong></label><br>
+
+            <select name="usage_area" required>
+
+                <option value="">Select Usage</option>
+
+                <option value="Inbound Calling">
+                    Inbound Calling
+                </option>
+
+                <option value="Outbound Calling">
+                    Outbound Calling
+                </option>
+
+                <option value="Inbound and Outbound">
+                    Inbound and Outbound
+                </option>
+
+                <option value="Customer Support">
+                    Customer Support
+                </option>
+
+                <option value="Sales">
+                    Sales
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div style="margin-bottom:20px;">
+
+            <label><strong>Voice Provider</strong></label><br>
+
+            <input
+                type="text"
+                name="voice_provider"
+                placeholder="Example: ElevenLabs, Telnyx, Vapi"
+            >
+
+        </div>
+
+
+        <button type="submit">
+
+            + Add Voice Configuration
+
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- VOICE CONFIGURATIONS -->
+
+<section class="panel">
+
+    <h2>Configured Voices</h2>
+
+
+    {% if voices %}
+
+    <div style="overflow-x:auto;">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Industry</th>
+
+                    <th>Voice Type</th>
+
+                    <th>Gender</th>
+
+                    <th>Voice Style</th>
+
+                    <th>Usage Area</th>
+
+                    <th>Provider</th>
+
+                    <th>Created</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for voice in voices %}
+
+                <tr>
+
+                    <td>
+                        {{ voice.id }}
+                    </td>
+
+                    <td>
+                        {{ voice.industry }}
+                    </td>
+
+                    <td>
+                        {{ voice.voice_type }}
+                    </td>
+
+                    <td>
+                        {{ voice.voice_gender }}
+                    </td>
+
+                    <td>
+                        {{ voice.voice_style }}
+                    </td>
+
+                    <td>
+                        {{ voice.usage_area }}
+                    </td>
+
+                    <td>
+                        {{ voice.voice_provider or "-" }}
+                    </td>
+
+                    <td>
+
+                        {% if voice.created_at %}
+
+                            {{ voice.created_at.strftime('%d-%m-%Y %H:%M') }}
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            method="post"
+                            action="/voice-architecture/{{ voice.id }}/delete"
+                            onsubmit="return confirm('Delete this voice configuration?');"
+                        >
+
+                            <button type="submit">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+    <section class="empty">
+
+        <h3>No Voice Configurations Yet</h3>
+
+        <p>
+
+            Add your first AI voice configuration above.
+
+        </p>
+
+        <p>
+
+            You can define:
+
+            <br><br>
+
+            • Industry<br>
+            • Voice role<br>
+            • Female, Male or Neutral voice<br>
+            • Human-like or Robotic voice<br>
+            • Where the voice is used<br>
+            • Voice provider
+
+        </p>
+
+    </section>
+
+    {% endif %}
+
+</section>
+
+
+{% endblock %}
